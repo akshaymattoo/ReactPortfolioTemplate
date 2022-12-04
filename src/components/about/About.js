@@ -22,6 +22,7 @@ export default function About() {
             about{firstName} <span className={Style.green}>(main)</span> ${" "}
           </span>
           {info.bio}
+          <a href="/blog"> blog</a>
         </p>
       </>
     );
