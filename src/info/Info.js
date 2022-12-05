@@ -232,6 +232,8 @@ export const info = {
       title: "Shorthand to a search in the browser",
       description:
         "“Data is the new oil”, this phrase has been around for a while now. With more and more websites more data is being generated every day…",
+      imageUrl:
+        "https://images.unsplash.com/photo-1553895501-af9e282e7fc1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
     },
     {
       id: "2701fb0c99c0",
@@ -268,6 +270,8 @@ export const info = {
       title: "What is null in JSON.stringify(obj,null,2)",
       description:
         "As a javascript developer, we have been using JSON.stringify() to display a formatted JSON. But ever wondered what is null . Today we will…",
+      imageUrl:
+        "https://images.unsplash.com/photo-1607706009771-de8808640bcf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
     },
     {
       id: "e9fc8b456de0",
@@ -303,6 +307,8 @@ export const info = {
       title: "Create a new Github repository",
       description:
         "A shorthand to create a new Github repository is to go to your browser and type “repo.new”. Then go ahead and fill out all the details.",
+      imageUrl:
+        "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1188&q=80",
     },
   ],
 };
