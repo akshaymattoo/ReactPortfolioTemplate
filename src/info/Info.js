@@ -72,20 +72,12 @@ export const info = {
     // Feel free to remove any of these that you don't have. I'll write an FAQ on how to add new ones later, let me know if you have a request for an icon!
     // Just change the links so that they lead to your social profiles.
   ],
-  bio: "Hello! I'm Akshay. I'm a softwre engineer for Meta. I studied CompSci at UT Arlington, I enjoy my happy hour with some heavy lifts or some body weight routine. Currently trying 12*12 inspired by Peter Levels and ignited by Justin Rahardjo.Read more about it in my",
+  bio: "Hello! I'm Akshay. I'm a software engineer for Meta. I keep experimenting with different tech stacks. I primarily use HTML, CSS and JavaScript. My current go to tech stack is React.js, Node, Express.Currently trying 12*12 inspired by Peter Levels and ignited by Justin Rahardjo.Read more about it in my",
   skills: {
     proficientWith: ["javascript", "react", "git", "html5", "css", "nodejs"],
     exposedTo: ["chakra ui", "firebase", "typescript"],
   },
   hobbies: [
-    {
-      label: "sometime reading",
-      emoji: "📖",
-    },
-    {
-      label: "listening audio books, podcasts",
-      emoji: "🎧",
-    },
     {
       label: "running",
       emoji: "🏃",
@@ -93,6 +85,14 @@ export const info = {
     {
       label: "lifting heavy",
       emoji: "🏋️",
+    },
+    {
+      label: "listening audio books, podcasts",
+      emoji: "🎧",
+    },
+    {
+      label: "binge watch youtube",
+      emoji: "📺",
     },
     {
       label: "cooking",
