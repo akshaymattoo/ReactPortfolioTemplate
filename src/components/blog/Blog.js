@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import BlogBlock from "./BlogBlock";
 import { Box, Grid } from "@mui/material";
 import { info } from "../../info/Info";
-
+import { mediumArticles } from "../../data/data";
 export default function Blog() {
   const [blogs, setBlogs] = useState([]);
   useEffect(() => {
@@ -10,11 +10,12 @@ export default function Blog() {
     // declare the async data fetching function
     const fetchData = async () => {
       // get the data from the api
-      const data = await fetch(
-        "https://sparkling-bonus-3348.akshaymattoo.workers.dev/"
-      );
+      // const data = await fetch(
+      //   "https://sparkling-bonus-3348.akshaymattoo.workers.dev/"
+      // );
       // convert the data to json
-      const json = await data.json();
+      console.log(mediumArticles);
+      const json = mediumArticles; //await data.json();
 
       json.data.posts.sort((a, b) => {
         return b.createdAt - a.createdAt;
