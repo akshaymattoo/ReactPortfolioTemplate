@@ -28,7 +28,14 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "articles:build": "node scripts/build-articles.mjs",
+    "articles:import": "node scripts/import-medium.mjs",
+    "prestart": "npm run articles:build",
+    "prebuild": "npm run articles:build",
+    "postbuild": "node scripts/render-articles.mjs",
+    "articles:verify": "node scripts/verify-articles.mjs",
+    "preview": "node scripts/preview.mjs"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -44,5 +51,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "cheerio": "^1.2.0",
+    "gray-matter": "^4.0.3",
+    "remark": "^15.0.1",
+    "remark-gfm": "^4.0.1",
+    "remark-html": "^16.0.1",
+    "turndown": "^7.2.4"
   }
 }

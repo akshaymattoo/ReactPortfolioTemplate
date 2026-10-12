@@ -2,17 +2,17 @@ import React, { useEffect } from "react";
 import {
   BrowserRouter,
   Link,
-  NavLink,
   Route,
   Routes,
   useLocation,
+  useParams,
 } from "react-router-dom";
-import { mediumArticles } from "./data/data";
 import "./Editorial.css";
+import localArticles from "./data/articles.json";
+import SiteFrame from "./components/SiteFrame.js";
+import ArticleView from "./components/ArticleView.js";
 
-const posts = [...mediumArticles.data.posts].sort(
-  (a, b) => b.createdAt - a.createdAt,
-);
+const posts = [...localArticles].sort((a, b) => b.createdAt - a.createdAt);
 const article = (id) => posts.find((post) => post.id === id);
 const projects = [
   {
@@ -207,7 +207,7 @@ function Blog() {
         </h1>
         <p className="hero-copy">
           On software, side projects, and life beyond the screen. An archive of
-          writing from 2020–2023.
+          writing on building, learning, and life.
         </p>
       </section>
       <section className="writing-list" aria-label="Writing archive">
@@ -234,6 +234,11 @@ function Blog() {
     </>
   );
 }
+function ArticleRoute() {
+  const { slug } = useParams();
+  const post = localArticles.find((article) => article.slug === slug);
+  return post ? <ArticleView article={post} /> : <Missing />;
+}
 function Missing() {
   return (
     <section className="hero interior">
@@ -253,63 +258,56 @@ function ScrollPosition() {
   useEffect(() => {
     if (hash) document.getElementById(hash.slice(1))?.scrollIntoView();
     else window.scrollTo(0, 0);
-    document.title = `${pathname === "/about" ? "About" : pathname === "/blog" ? "Writing" : "Software & Curiosity"} — Akshay Mattoo`;
+    const localPost = localArticles.find(
+      (post) => post.url.replace(/\/$/, "") === pathname.replace(/\/$/, ""),
+    );
+    if (localPost) {
+      document.title = `${localPost.title} — Akshay Mattoo`;
+      return;
+    }
+    document.title = `${pathname.replace(/\/$/, "") === "/about" ? "About" : pathname.replace(/\/$/, "") === "/blog" ? "Writing" : "Software & Curiosity"} — Akshay Mattoo`;
   }, [pathname, hash]);
   return null;
+}
+function AppRoutes() {
+  const { pathname } = useLocation();
+  return (
+    <SiteFrame
+      current={
+        pathname.startsWith("/blog")
+          ? "blog"
+          : pathname === "/about"
+            ? "about"
+            : ""
+      }
+    >
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:slug" element={<ArticleRoute />} />
+        <Route
+          path="/portfolio"
+          element={
+            <>
+              <section className="hero interior">
+                <p className="eyebrow">Projects & experiments</p>
+                <h1>Ideas into practice.</h1>
+              </section>
+              <Work />
+            </>
+          }
+        />
+        <Route path="*" element={<Missing />} />
+      </Routes>
+    </SiteFrame>
+  );
 }
 function App() {
   return (
     <BrowserRouter>
       <ScrollPosition />
-      <a className="skip-link" href="#main">
-        Skip to content
-      </a>
-      <div className="site-shell">
-        <header className="site-header">
-          <Link className="wordmark" to="/">
-            Akshay Mattoo<span className="wordmark-dot">.</span>
-          </Link>
-          <nav aria-label="Main navigation">
-            <a href="/#work">Work</a>
-            <NavLink to="/about">About</NavLink>
-            <NavLink to="/blog">Writing</NavLink>
-          </nav>
-        </header>
-        <main id="main">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route
-              path="/portfolio"
-              element={
-                <>
-                  <section className="hero interior">
-                    <p className="eyebrow">Projects & experiments</p>
-                    <h1>Ideas into practice.</h1>
-                  </section>
-                  <Work />
-                </>
-              }
-            />
-            <Route path="*" element={<Missing />} />
-          </Routes>
-        </main>
-        <footer className="site-footer">
-          <a className="footer-invite" href="mailto:akshaymattoo@gmail.com">
-            Let’s talk.
-            <Arrow />
-          </a>
-          <div className="footer-links">
-            <a href="mailto:akshaymattoo@gmail.com">Email</a>
-            <a href="https://github.com/akshaymattoo">GitHub</a>
-            <a href="https://www.linkedin.com/in/akshaymattoo">LinkedIn</a>
-          </div>
-          <p className="footer-note">
-            Akshay Mattoo · A small corner of the internet.
-          </p>
-        </footer>
-      </div>
+      <AppRoutes />
     </BrowserRouter>
   );
 }
