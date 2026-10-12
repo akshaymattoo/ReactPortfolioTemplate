@@ -7,6 +7,7 @@ import html from "remark-html";
 const articles = JSON.parse(
   await fs.readFile("src/data/articles.json", "utf8"),
 );
+const projects = JSON.parse(await fs.readFile("src/data/projects.json", "utf8"));
 assert(articles.length > 0, "No articles generated");
 let imageCount = 0;
 for (const article of articles) {
@@ -45,6 +46,28 @@ for (const article of articles) {
       );
   }
 }
+assert.equal(projects.length, 3, "Expected three Markdown projects");
+assert.equal(
+  projects.filter((project) => project.featured).length,
+  2,
+  "Expected two featured projects",
+);
+for (const project of projects) {
+  const page = load(
+    await fs.readFile(`build/projects/${project.slug}/index.html`, "utf8"),
+  );
+  assert.equal(page("h1").text(), project.title);
+  assert.equal(
+    page(".article-body").text(),
+    load(project.html, null, false).text(),
+    `${project.slug}: complete project content must be present without JS`,
+  );
+  assert.equal(page('script[src*="/static/js/"]').length, 0);
+  assert.equal(
+    page('link[rel="canonical"]').attr("href"),
+    `https://akshaymattoo.com${project.url}`,
+  );
+}
 const unsafe = String(
   await remark()
     .use(gfm)
@@ -70,5 +93,5 @@ assert(
   "Markdown structure was lost",
 );
 console.log(
-  `Verified ${articles.length} complete static article pages, ${imageCount} local images, internal links, canonical tags, shared CSS, and Markdown sanitization.`,
+  `Verified ${articles.length} article pages, ${projects.length} project pages, ${imageCount} local images, internal links, canonical tags, shared CSS, and Markdown sanitization.`,
 );

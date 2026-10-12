@@ -1,0 +1,46 @@
+[
+  {
+    "id": "wordle-for-kids",
+    "title": "Wordle for Kids",
+    "slug": "wordle-for-kids",
+    "date": "2026-10-12",
+    "description": "A simple three-letter Wordle game built so my five-year-old son could play alongside his grandpa.",
+    "status": "live",
+    "featured": true,
+    "order": 1,
+    "projectUrl": "https://fantastic-zabaione-02e457.netlify.app/",
+    "cta": "Play the game",
+    "createdAt": 1791763200000,
+    "html": "<p>My dad plays Wordle every evening. My five-year-old son noticed and got curious.</p>\n<p>For a week, he would sit next to grandpa, excited to be involved—but the words were too hard. He would lose interest halfway through. That moment of wanting to participate but not being able to stuck with me.</p>\n<p>I looked for a kid-friendly version with simple vocabulary, shorter words, and the same fun format. I could not find anything that felt right, so I asked Claude to help me build one.</p>\n<p>It works like Wordle, with the same color logic and guessing mechanic, but it is designed for a five-year-old:</p>\n<ul>\n<li>Three-letter words only</li>\n<li>More than 200 kid-friendly words such as cat, dog, sun, hug, and dad</li>\n<li>Multiple tries with no daily restriction</li>\n<li>Everything contained in one static HTML file</li>\n</ul>\n<p>There is no backend, database, or login. Now my son plays alongside grandpa: a different game at the same table.</p>\n<p><a href=\"https://fantastic-zabaione-02e457.netlify.app/\">Play Wordle for Kids</a></p>\n",
+    "url": "/projects/wordle-for-kids/"
+  },
+  {
+    "id": "creature-power-game",
+    "title": "Creature Power Game",
+    "slug": "creature-power-game",
+    "date": "2026-10-12",
+    "description": "An animal guessing and collecting game I am building for my six-year-old son, inspired by Wild Kratts.",
+    "status": "live",
+    "featured": true,
+    "order": 2,
+    "projectUrl": "https://claude.ai/artifact/9u6eHqaeN94VWdU2FXCxaN",
+    "cta": "Try the game",
+    "createdAt": 1791763200000,
+    "html": "<p>I am building this game for my six-year-old son. It turns his interest in animals and <em>Wild Kratts</em> into a simple game we can enjoy together.</p>\n<p>The player guesses an animal from clues. Each correct answer unlocks a collectible disc, giving every round a small sense of discovery and progress.</p>\n<p>The idea is still growing. I want the clues to feel understandable for a six-year-old, the animals to stay interesting, and the collecting mechanic to make him want to learn one more fact before stopping.</p>\n<p>This is also an experiment in building with AI: starting with a personal idea, making a playable version quickly, and improving it by watching how my son actually uses it.</p>\n<p><a href=\"https://claude.ai/artifact/9u6eHqaeN94VWdU2FXCxaN\">Try the Creature Power Game</a></p>\n",
+    "url": "/projects/creature-power-game/"
+  },
+  {
+    "id": "fitness-app",
+    "title": "Fitness app",
+    "slug": "fitness-app",
+    "date": "2026-10-12",
+    "description": "A work-in-progress fitness app that helps busy people find a practical way to work up a sweat.",
+    "status": "in-progress",
+    "featured": false,
+    "order": 3,
+    "cta": "Read about the idea",
+    "createdAt": 1791763200000,
+    "html": "<p>I am building a fitness app for busy people who want to work up a sweat without needing a large block of free time.</p>\n<p>The project is still in progress. I am exploring how to make exercise feel practical on a crowded day, with short sessions and a simple experience that helps people begin instead of spending time planning.</p>\n<p>I will add more here as the idea, workouts, and product take shape.</p>\n",
+    "url": "/projects/fitness-app/"
+  }
+]

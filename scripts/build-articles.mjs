@@ -8,9 +8,14 @@ import { load } from "cheerio";
 // Preserve literal HTML examples from articles as text, never executable markup.
 function literalHtml() {
   return function walk(node) {
-    if (node.type === 'html') node.type = 'text';
+    if (node.type === "html") node.type = "text";
     if (node.children) node.children.forEach(walk);
   };
+}
+async function renderMarkdown(content) {
+  return String(
+    await remark().use(gfm).use(literalHtml).use(html).process(content),
+  );
 }
 const articles = [];
 for (const file of (await fs.readdir("content/articles"))
@@ -27,7 +32,7 @@ for (const file of (await fs.readdir("content/articles"))
     throw new Error(`Duplicate article: ${file}`);
   const date = new Date(data.date);
   if (Number.isNaN(date.getTime())) throw new Error(`Invalid date: ${file}`);
-  const rendered = String(await remark().use(gfm).use(literalHtml).use(html).process(content));
+  const rendered = await renderMarkdown(content);
   const createdAt = date.getTime();
   articles.push({
     ...data,
@@ -69,4 +74,47 @@ await fs.writeFile(
   "src/data/articles.json",
   JSON.stringify(articles, null, 2) + "\n",
 );
-console.log(`Compiled ${articles.length} Markdown articles with remark.`);
+
+const projects = [];
+for (const file of (await fs.readdir("content/projects"))
+  .filter((f) => f.endsWith(".md"))
+  .sort()) {
+  const { data, content } = matter(
+    await fs.readFile(`content/projects/${file}`, "utf8"),
+  );
+  for (const key of [
+    "id",
+    "title",
+    "slug",
+    "date",
+    "description",
+    "status",
+  ])
+    if (data[key] === undefined || data[key] === "")
+      throw new Error(`${file}: missing ${key}`);
+  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(data.slug))
+    throw new Error(`Unsafe project slug: ${data.slug}`);
+  if (!['live', 'in-progress'].includes(data.status))
+    throw new Error(`${file}: invalid project status`);
+  if (projects.some((project) => project.slug === data.slug || project.id === data.id))
+    throw new Error(`Duplicate project: ${file}`);
+  const date = new Date(data.date);
+  if (Number.isNaN(date.getTime())) throw new Error(`Invalid date: ${file}`);
+  projects.push({
+    ...data,
+    date: date.toISOString().slice(0, 10),
+    createdAt: date.getTime(),
+    featured: data.featured === true,
+    order: Number(data.order) || 99,
+    html: await renderMarkdown(content),
+    url: `/projects/${data.slug}/`,
+  });
+}
+projects.sort((a, b) => a.order - b.order);
+await fs.writeFile(
+  "src/data/projects.json",
+  JSON.stringify(projects, null, 2) + "\n",
+);
+console.log(
+  `Compiled ${articles.length} Markdown articles and ${projects.length} projects with remark.`,
+);

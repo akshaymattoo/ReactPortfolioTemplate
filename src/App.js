@@ -9,25 +9,14 @@ import {
 } from "react-router-dom";
 import "./Editorial.css";
 import localArticles from "./data/articles.json";
+import localProjects from "./data/projects.json";
 import SiteFrame from "./components/SiteFrame.js";
 import ArticleView from "./components/ArticleView.js";
+import ProjectView from "./components/ProjectView.js";
 
 const posts = [...localArticles].sort((a, b) => b.createdAt - a.createdAt);
 const article = (id) => posts.find((post) => post.id === id);
-const projects = [
-  {
-    name: "Karyaa",
-    label: "01 / Startup experiment",
-    text: "The first startup in my 12 × 12 challenge. Notes from taking an idea into a personal project.",
-    id: "246f2cac2ad",
-  },
-  {
-    name: "VsCodeSetup",
-    label: "02 / Side project",
-    text: "The second project in the series. A look at VsCodeSetup and the next step in my building journey.",
-    id: "f45e67c8fa9c",
-  },
-];
+const featuredProjects = localProjects.filter((project) => project.featured);
 function Arrow() {
   return (
     <span aria-hidden="true" className="arrow">
@@ -52,15 +41,47 @@ function Work() {
         </h2>
         <span className="small-note">Ideas put into practice</span>
       </div>
-      <div className="project-grid">
-        {projects.map((project) => (
-          <article className="project" key={project.id}>
-            <p className="project-label">{project.label}</p>
-            <h3>{project.name}</h3>
-            <p>{project.text}</p>
-            <StoryLink id={project.id}>Read the story</StoryLink>
+      <div className="featured-project-grid">
+        {featuredProjects.map((project, index) => (
+          <article className="featured-project" key={project.id}>
+            <p className="project-label">
+              0{index + 1} / Featured family project
+            </p>
+            <h3>{project.title}</h3>
+            <p>{project.description}</p>
+            <Link className="text-link" to={project.url}>
+              Read the story <Arrow />
+            </Link>
           </article>
         ))}
+      </div>
+      <div className="other-projects">
+        <div className="section-heading">
+          <h3 className="eyebrow">Other projects</h3>
+          <span className="small-note">Experiments at different stages</span>
+        </div>
+        <div className="other-project-grid">
+          <article className="project compact-project">
+            <p className="project-label status-label">In progress</p>
+            <h3>Fitness app</h3>
+            <p>Helping busy people find a practical way to work up a sweat.</p>
+            <Link className="text-link" to="/projects/fitness-app/">
+              Follow the build <Arrow />
+            </Link>
+          </article>
+          <article className="project compact-project">
+            <p className="project-label">Startup experiment</p>
+            <h3>Karyaa</h3>
+            <p>A focused daily task tracker built around doing less, better.</p>
+            <StoryLink id="246f2cac2ad">Read the story</StoryLink>
+          </article>
+          <article className="project compact-project">
+            <p className="project-label">Developer tool</p>
+            <h3>VsCodeSetup</h3>
+            <p>A way to discover the VS Code extensions developers use.</p>
+            <StoryLink id="f45e67c8fa9c">Read the story</StoryLink>
+          </article>
+        </div>
       </div>
     </section>
   );
@@ -78,8 +99,9 @@ function Home() {
           <span>Following curiosity.</span>
         </h1>
         <p className="hero-copy">
-          I’m Akshay, a software engineer who enjoys experimenting with ideas
-          and sharing what I learn.
+          I’m Akshay, a software engineer, curious builder, and father of two
+          little angels. I enjoy experimenting with ideas and sharing what I
+          learn.
         </p>
         <Link className="text-link" to="/about">
           A little about me
@@ -87,24 +109,6 @@ function Home() {
         </Link>
       </section>
       <Work />
-      <section className="section approach" aria-labelledby="approach-title">
-        <h2 className="eyebrow" id="approach-title">
-          Learning through doing
-        </h2>
-        <p className="statement">
-          An idea. An experiment.
-          <br />
-          Something learned along the way.
-        </p>
-        <div className="approach-bottom">
-          <p>
-            My 12 × 12 challenge started with a collection of ideas and a
-            decision to begin. I write about the projects and the things I learn
-            as I go.
-          </p>
-          <StoryLink id="c3d38dddcbcd">How it started</StoryLink>
-        </div>
-      </section>
       <section className="section personal-grid">
         <div>
           <h2 className="eyebrow">Outside of work</h2>
@@ -120,10 +124,10 @@ function Home() {
         </div>
         <div className="selected-notes">
           <h2 className="eyebrow">Selected writing</h2>
-          <StoryLink id="c3d38dddcbcd">The 12 × 12 challenge</StoryLink>
           <StoryLink id="ffef310a434d">
             Embarrassment Driven Development
           </StoryLink>
+          <StoryLink id="01f999019793">The mentality of abundance</StoryLink>
           <StoryLink id="11e117463726">A night half marathon in Zion</StoryLink>
           <Link className="archive-link" to="/blog">
             All writing <span aria-hidden="true">→</span>
@@ -156,10 +160,13 @@ function About() {
             give me a place to explore ideas and try things out.
           </p>
           <p>
-            I started the 12 × 12 project and startup challenge in 2023. Karyaa
-            and VsCodeSetup are two projects I’ve written about along the way.
+            Some ideas begin with a technical question. Others begin at home,
+            like building a simpler Wordle for my son or turning his interest
+            in animals into a game.
           </p>
-          <StoryLink id="c3d38dddcbcd">Read about the challenge</StoryLink>
+          <Link className="text-link" to="/#work">
+            See selected projects <Arrow />
+          </Link>
         </div>
       </section>
       <section className="section about-grid">
@@ -167,7 +174,9 @@ function About() {
         <div>
           <p>
             I enjoy running, lifting, cooking, and listening to audiobooks and
-            podcasts. And there’s usually a cup of chai nearby.
+            podcasts. More than anything, I love simply being with my kids. I’m
+            the father of two little angels, and there’s usually a cup of chai
+            nearby while we spend time together.
           </p>
           <p>
             Running has also found its way into my writing, from everyday
@@ -239,6 +248,11 @@ function ArticleRoute() {
   const post = localArticles.find((article) => article.slug === slug);
   return post ? <ArticleView article={post} /> : <Missing />;
 }
+function ProjectRoute() {
+  const { slug } = useParams();
+  const project = localProjects.find((item) => item.slug === slug);
+  return project ? <ProjectView project={project} /> : <Missing />;
+}
 function Missing() {
   return (
     <section className="hero interior">
@@ -265,6 +279,14 @@ function ScrollPosition() {
       document.title = `${localPost.title} — Akshay Mattoo`;
       return;
     }
+    const localProject = localProjects.find(
+      (project) =>
+        project.url.replace(/\/$/, "") === pathname.replace(/\/$/, ""),
+    );
+    if (localProject) {
+      document.title = `${localProject.title} — Akshay Mattoo`;
+      return;
+    }
     document.title = `${pathname.replace(/\/$/, "") === "/about" ? "About" : pathname.replace(/\/$/, "") === "/blog" ? "Writing" : "Software & Curiosity"} — Akshay Mattoo`;
   }, [pathname, hash]);
   return null;
@@ -286,6 +308,7 @@ function AppRoutes() {
         <Route path="/about" element={<About />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<ArticleRoute />} />
+        <Route path="/projects/:slug" element={<ProjectRoute />} />
         <Route
           path="/portfolio"
           element={

@@ -2,6 +2,8 @@
 
 Articles live in `content/articles/*.md`. The site uses remark, remark-gfm, and remark-html to turn Markdown into sanitized HTML at build time. `ArticleView.js` is the shared article template, `SiteFrame.js` is the shared navigation/footer, and `src/Editorial.css` styles both the React site and the generated HTML pages.
 
+Projects live in `content/projects/*.md`. Their frontmatter also accepts `status` (`live` or `in-progress`), `featured`, `order`, an optional `projectUrl`, and button text in `cta`. The build creates complete static pages at `/projects/<slug>/` and generates `src/data/projects.json`; edit the Markdown source rather than the JSON.
+
 ## Write or edit an article
 
 Create a file like `content/articles/my-next-project.md`:
